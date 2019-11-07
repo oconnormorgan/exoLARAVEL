@@ -43,7 +43,8 @@ function affichage(data) {
         '. Éditeur : ' + data.editeur +
         '. Prix : ' + data.prix +
         ' €. description : ' + data.description + '. '
-        + "<button onclick='del( " + data.id + " )'>Supprimer</button>"
+        + "<button onclick='del( " + data.id + " )'>Supprimer</button> "
+        + "<a href='/jeux/" + data.id + "'>Information</a>"
         + "</p>"
     );
 }

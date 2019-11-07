@@ -13,7 +13,7 @@
 
 Route::get('/', 'JeuxController@index');
 
-Route::get('/jeux/{id}', 'JeuxController@displayJeu')->where('id', '[0-9]+');
+Route::get('/jeux/{id}', 'JeuxController@displayJeu')->where('id', '[0-9]+'); //la fin correspond au RegExp
 
 Route::prefix('api')->group(function () {
     Route::prefix('jeux')->group(function () {
@@ -21,4 +21,12 @@ Route::prefix('api')->group(function () {
         Route::get('all', 'JeuxController@all');
         Route::get('del', 'JeuxController@del');
     });
+});
+
+Route::get('/404', function(){
+    return view('error404');
+});
+
+Route::fallback(function () {
+    return view('error404');
 });

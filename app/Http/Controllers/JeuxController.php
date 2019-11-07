@@ -15,7 +15,12 @@ class JeuxController extends Controller
 
     function displayJeu($id) {
         $data = Jeux::find($id);
-        return view('jeu',['data'=>$data]);
+        if ($data != NULL) {
+            return view('jeu',['data'=>$data]);
+        } else {
+            return view('error404');
+        }
+        
     }
 
     function add(Request $request)
