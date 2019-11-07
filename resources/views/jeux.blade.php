@@ -1,4 +1,10 @@
-<meta name="csrf-token" content="{{ csrf_token() }}"> 
+@extends("layouts.app")
+
+@section("titre")
+    toto
+@endSection
+
+@section("content")
 
 <form onsubmit="send()" id="formAjout">
     
@@ -21,4 +27,5 @@
 </form>
 
 <p id="donnees"></p>
-<p id="temporaire"></p>
+
+@endSection

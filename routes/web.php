@@ -13,6 +13,8 @@
 
 Route::get('/', 'JeuxController@index');
 
+Route::get('/jeux/{id}', 'JeuxController@displayJeu')->where('id', '[0-9]+');
+
 Route::prefix('api')->group(function () {
     Route::prefix('jeux')->group(function () {
         Route::post('add', 'JeuxController@add');

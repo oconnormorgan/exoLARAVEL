@@ -34,7 +34,7 @@ function send() {
 
 /**
  * 
- * @param {*} data les données
+ * @param {*} data formatage des données qui vont être affiché
  */
 function affichage(data) {
     $('#donnees').append(
@@ -43,7 +43,7 @@ function affichage(data) {
         '. Éditeur : ' + data.editeur +
         '. Prix : ' + data.prix +
         ' €. description : ' + data.description + '. '
-        + "<button onclick='suppression( " + data.id + " )'>Supprimer</button>"
+        + "<button onclick='del( " + data.id + " )'>Supprimer</button>"
         + "</p>"
     );
 }
@@ -68,25 +68,35 @@ function getList() {
         })
 }
 
-getList();
+getList(); 
 
-function suppression(id) {
+function del(id) {
     event.preventDefault(); //empeche le raffranchissement
     console.log(id);
 
     $.ajax({
-       method: "GET", // la methode utilise par le forumalaire
-       url: "/api/jeux/del", //la cible du formulaire pour traitre
-       data: { 
-           id : id
-       },
-       dataType: "json" // le type de données qu'on envoi
-     })
-    .done(function(datas) {
-        console.log(datas);
-        // $("#jeu_"+data.id).fadeOut("slow"); //fais disparaitre les elements
+        method: "GET", // la methode utilise par le forumalaire
+        url: "/api/jeux/del", //la cible du formulaire pour traite
+        data: {
+            id: id,
+            status: status
+        },
+        dataType: "json" // le type de données qu'on envoi
     })
-    .fail(function() {
-       alert("erreur 404 - js");
-    })
+        .done(function (datas) {
+            console.log('id : ' + datas.id);
+            console.log('status : ' + datas.status);
+
+            if (datas.status === "ok") {
+                $("#jeu_" + datas.id).fadeOut("slow"); //fais disparaitre les elements
+            } else if (datas.status === "errorDB") {
+                console.log("erreur de la banque de données");
+            }
+        })
+        .fail(function (status) {
+            if (status.status === 422) {
+                let error = status.responseJSON.errors;
+                console.log(error);
+            }
+        })
 } 
